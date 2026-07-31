@@ -29,7 +29,7 @@ export default function Login(props){
   try {
     await authenticateUser(user, password);
     await updateAtoms();
-    router.push('/favourites');
+    router.push('/');
   } catch (err) {
     setWarning(err.message);
   }
