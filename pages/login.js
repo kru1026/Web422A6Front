@@ -38,7 +38,14 @@ export default function Login(props){
   return (
     <>
       <Card bg="light">
-        <Card.Body><h2>Login</h2>Enter your login information below:</Card.Body>
+        <Card.Body>
+          <h2>Login</h2>
+          <p>Enter your login information below:</p>
+
+          <p style={{ color: "red" }}>
+            Please allow 3-5 minutes for the backend to restart if clicking Login has no response.
+          </p>
+        </Card.Body>
       </Card>
       <br />
       <Form onSubmit={handleSubmit}>

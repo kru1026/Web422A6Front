@@ -27,7 +27,14 @@ export default function Register(props){
   return (
     <>
       <Card bg="light">
-        <Card.Body><h2>Register</h2>Register for an account:</Card.Body>
+        <Card.Body>
+          <h2>Register</h2>
+          <p>Register for an account:</p>
+
+          <p style={{ color: "red" }}>
+            Please allow 3-5 minutes for the backend to restart if clicking Register has no response.
+          </p>
+        </Card.Body>
       </Card>
       <br />
       <Form onSubmit={handleSubmit}>
