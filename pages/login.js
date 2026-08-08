@@ -41,9 +41,8 @@ export default function Login(props){
         <Card.Body>
           <h2>Login</h2>
           <p>Enter your login information below:</p>
-
           <p style={{ color: "red" }}>
-            Please allow 3-5 minutes for the backend to restart if clicking Login has no response.
+            Please allow 2-4 minutes for the backend to restart if clicking Login has no response.
           </p>
         </Card.Body>
       </Card>
