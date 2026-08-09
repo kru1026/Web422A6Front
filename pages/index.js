@@ -1,19 +1,31 @@
-/*********************************************************************************
-*  WEB422 – Assignment 06
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part of this
-*  assignment has been copied manually or electronically from any other source (including web sites) or 
-*  distributed to other students.
-* 
-*  Name: Keith Ru         Student ID: 058-180-092         Date: Dec 08, 2023
-*
-*  Vercel App (Deployed) Link: web-422-assignment-06-2.vercel.app 
-*
-********************************************************************************/ 
- 
- 
 import { Row, Col } from 'react-bootstrap';
+import { useSetAtom } from "jotai";
+import { backendReadyAtom } from "../store";
 
 export default function Home() {
+
+  const setBackendReady = useSetAtom(backendReadyAtom);
+
+  async function healthCheck() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
+            method: 'GET',
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed health check");
+        }
+        const data = await res.json();
+        setBackendReady(true);
+        return data;
+    } catch (error) {
+        console.error("Error fetching appointments:", error);
+        throw error; 
+    }
+}
+
+  healthCheck();
+
   return (
     <>
       <Row><Col>

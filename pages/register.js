@@ -2,7 +2,8 @@ import { Card, Form, Alert, Button } from "react-bootstrap";
 import { useState } from 'react';
 import { registerUser } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
-
+import { useAtomValue } from "jotai";
+import { backendReadyAtom } from "@/store";
 
 export default function Register(props){
 
@@ -12,6 +13,8 @@ export default function Register(props){
   const [warning, setWarning] = useState("");
 
   const router = useRouter();
+
+  const backendReady = useAtomValue(backendReadyAtom);
 
   async function handleSubmit(e) {
   e.preventDefault();
@@ -31,9 +34,11 @@ export default function Register(props){
           <h2>Register</h2>
           <p>Register for an account:</p>
 
-          <p style={{ color: "red" }}>
-            Please wait 2-4 minutes for the backend to restart if clicking Register has no response.
-          </p>
+          {!backendReady && (
+            <p style={{ color: "red" }}>
+              Please wait 2-4 minutes for the backend to restart. When this message disappears, the backend is ready.
+            </p>
+          )}
         </Card.Body>
       </Card>
       <br />
