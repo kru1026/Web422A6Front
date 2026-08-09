@@ -64,7 +64,7 @@ function MainNav() {
           &nbsp;{token && <Form className="d-flex" onSubmit={handleSubmit}>
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Book, Toy, Weapon etc.."
               className="me-2"
               aria-label="Search"
               value={searchField} onChange={(e) => setSearchField(e.target.value)}

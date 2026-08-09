@@ -54,7 +54,7 @@ return (
     <Col> 
       <Form.Group className="mb-3">
         <Form.Label>Search Query</Form.Label>
-        <Form.Control type="text" placeholder="" name="q" className={errors.q && "is-invalid"}
+        <Form.Control type="text" placeholder="Enter Book, Toy, Weapon etc.." name="q" className={errors.q && "is-invalid"}
                       {...register("q", { required: true})}/>
       </Form.Group>
     </Col>
