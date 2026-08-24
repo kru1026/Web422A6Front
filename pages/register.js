@@ -28,37 +28,39 @@ export default function Register(props){
   }
 
   return (
-    <>
-      <Card bg="light">
-        <Card.Body>
-          <h2>Register</h2>
-          <p>Register for an account:</p>
-
-          {!backendReady && (
-            <p style={{ color: "red" }}>
-              Please wait 2-4 minutes for the backend to restart. When this message disappears, the backend is ready.
-            </p>
-          )}
-        </Card.Body>
-      </Card>
-      <br />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>User:</Form.Label><Form.Control type="text" value={user} id="userName" name="userName" onChange={e => setUser(e.target.value)} />
-        </Form.Group>
+  <>
+    {!backendReady ? (
+          <h5 style={{ color: "red" }}>
+            Please wait 2-4 minutes for the backend to restart. When this message disappears, the backend is ready.
+          </h5>
+    ) : (
+      <>
+        <Card bg="light">
+          <Card.Body>
+            <h2>Register</h2>
+            <p>Register for an account:</p>
+          </Card.Body>
+        </Card>
         <br />
-        <Form.Group>
-          <Form.Label>Password:</Form.Label><Form.Control type="password" value={password} id="password" name="password" onChange={e => setPassword(e.target.value)} />
-        </Form.Group>
-        <br />
-        <Form.Group>
-          <Form.Label>Confirm Password:</Form.Label><Form.Control type="password" value={password2} id="password2" name="password2" onChange={e => setPassword2(e.target.value)} />
-        </Form.Group>
-        { warning && ( <><br /><Alert variant="danger">{warning}</Alert></> )}
-        <br />
-        <Button variant="primary" className="pull-right" type="submit">Register</Button>
-        
-      </Form>
-    </>
-  );
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>User:</Form.Label><Form.Control type="text" value={user} id="userName" name="userName" onChange={e => setUser(e.target.value)} />
+          </Form.Group>
+          <br />
+          <Form.Group>
+            <Form.Label>Password:</Form.Label><Form.Control type="password" value={password} id="password" name="password" onChange={e => setPassword(e.target.value)} />
+          </Form.Group>
+          <br />
+          <Form.Group>
+            <Form.Label>Confirm Password:</Form.Label><Form.Control type="password" value={password2} id="password2" name="password2" onChange={e => setPassword2(e.target.value)} />
+          </Form.Group>
+          { warning && ( <><br /><Alert variant="danger">{warning}</Alert></> )}
+          <br />
+          <Button variant="primary" className="pull-right" type="submit">Register</Button>
+          
+        </Form>
+      </>
+    )}
+  </>
+);
 }
