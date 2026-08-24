@@ -2,7 +2,7 @@ import { Card, Form, Alert, Button } from "react-bootstrap";
 import { useState } from 'react';
 import { authenticateUser } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { favouritesAtom } from "@/store";
 import { searchHistoryAtom } from "@/store";
 import { getFavourites } from "@/lib/userData";
@@ -19,6 +19,7 @@ export default function Login(props){
   const [warning, setWarning] = useState("");
 
   const backendReady = useAtomValue(backendReadyAtom);
+  const setBackendReady = useSetAtom(backendReadyAtom);
 
   const router = useRouter();
 
@@ -37,6 +38,26 @@ export default function Login(props){
     setWarning(err.message);
   }
   }
+
+  async function healthCheck() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
+            method: 'GET',
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed health check");
+        }
+        const data = await res.json();
+        setBackendReady(true);
+        return data;
+    } catch (error) {
+        console.error("Error fetching appointments:", error);
+        throw error; 
+    }
+}
+
+  healthCheck();
 
   return (
   <>

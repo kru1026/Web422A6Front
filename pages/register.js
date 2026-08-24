@@ -2,7 +2,7 @@ import { Card, Form, Alert, Button } from "react-bootstrap";
 import { useState } from 'react';
 import { registerUser } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { backendReadyAtom } from "@/store";
 
 export default function Register(props){
@@ -15,6 +15,8 @@ export default function Register(props){
   const router = useRouter();
 
   const backendReady = useAtomValue(backendReadyAtom);
+  const setBackendReady = useSetAtom(backendReadyAtom);
+  
 
   async function handleSubmit(e) {
   e.preventDefault();
@@ -26,6 +28,26 @@ export default function Register(props){
     setWarning(err.message);
   }
   }
+
+  async function healthCheck() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
+            method: 'GET',
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed health check");
+        }
+        const data = await res.json();
+        setBackendReady(true);
+        return data;
+    } catch (error) {
+        console.error("Error fetching appointments:", error);
+        throw error; 
+    }
+}
+
+  healthCheck();
 
   return (
   <>
